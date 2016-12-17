@@ -22,7 +22,10 @@ DIR := $(DIR)$(SUBDIR)
 
 SUBDIRS := foo/ bar/
 
+$(info current dir : $(DIR) entering subdirs)
 $(foreach SUBDIR,$(SUBDIRS),$(eval $(INCLUDE_SUBDIRS)))
+
+$(info current dir : $(DIR) leaving subdirs)
 # Local sources files and target
 
 SRC := 
@@ -54,4 +57,4 @@ OBJ_$(DIR): CFLAGS_TGT := -iquote$(DIR)$(HEADER_DIR)
 #
 
 DIR := $(DIR_$(STACK_POINTER))
-STACK_POINTER = $(basename $(STACK_POINTER)
+STACK_POINTER := $(basename $(STACK_POINTER))

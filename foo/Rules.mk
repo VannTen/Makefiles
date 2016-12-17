@@ -6,7 +6,7 @@
 #*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        *#
 #*                                                +#+#+#+#+#+   +#+           *#
 #*   Created: 2016/12/13 19:41:31 by mgautier          #+#    #+#             *#
-#*   Updated: 2016/12/16 17:17:53 by mgautier         ###   ########.fr       *#
+#*   Updated: 2016/12/16 17:12:53 by mgautier         ###   ########.fr       *#
 #*                                                                            *#
 #* ************************************************************************** *#
 
@@ -22,7 +22,10 @@ DIR := $(DIR)$(SUBDIR)
 
 SUBDIRS := foo/ bar/
 
+$(info current dir : $(DIR) entering subdirs)
 $(foreach SUBDIR,$(SUBDIRS),$(eval $(INCLUDE_SUBDIRS)))
+
+$(info current dir : $(DIR) leaving subdirs)
 # Local sources files and target
 
 SRC := 

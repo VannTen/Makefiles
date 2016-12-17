@@ -1,1 +1,1 @@
-$(info $(DIR))
+$(info $(DIR)$(SUBDIR))
