@@ -6,7 +6,7 @@
 #*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        *#
 #*                                                +#+#+#+#+#+   +#+           *#
 #*   Created: 2016/11/04 13:12:11 by mgautier          #+#    #+#             *#
-#*   Updated: 2016/12/16 17:12:21 by mgautier         ###   ########.fr       *#
+#*   Updated: 2016/12/17 21:59:05 by                  ###   ########.fr       *#
 #*                                                                            *#
 #* ************************************************************************** *#
 
@@ -23,10 +23,10 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Werror -ansi -pedantic-errors
 CFLAGS += $(CFLAGS_TGT)
 
-DEPFLAGS = -MT $@ -MP -MMD -MF $(word 2,$^)
+DEPFLAGS = -MT $@ -MP -MMD -MF $(word 2,$^).tmp
 
 COMPILE = $(CC) $(DEPFLAGS) $(CFLAGS) $(CPPFLAGS) -c -o $@ $<
-POSTCOMPILE = sed -E -i "" "s/[a-z],_,.,:]+/\$$(DIR)&/g" $(word 2,$^)
+POSTCOMPILE = sed -E "s/[a-z_.:]+/\$$(DIR)&/g" $(word 2,$^).tmp > $(word 2,$^)
 $(info $(POSTCOMPILE))
 DIR = 
 
