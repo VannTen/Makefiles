@@ -6,7 +6,7 @@
 #*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        *#
 #*                                                +#+#+#+#+#+   +#+           *#
 #*   Created: 2016/11/04 13:12:11 by mgautier          #+#    #+#             *#
-#*   Updated: 2016/12/19 18:04:19 by mgautier         ###   ########.fr       *#
+#*   Updated: 2016/12/19 18:14:02 by mgautier         ###   ########.fr       *#
 #*                                                                            *#
 #* ************************************************************************** *#
 
@@ -97,8 +97,10 @@ clean:
 mkclean:
 	$(RM) $(MKCLEAN)
 
-fclean: clean mkclean
+fclean: clean
 	$(RM) $(FCLEAN)
+	
+mrproper: fclean mkclean
 
 re: fclean all
 
