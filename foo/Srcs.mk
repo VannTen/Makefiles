@@ -6,19 +6,19 @@
 #    By: mgautier <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/12/19 07:58:53 by mgautier          #+#    #+#              #
-#    Updated: 2016/12/19 09:12:55 by mgautier         ###   ########.fr        #
+#    Updated: 2016/12/19 10:06:38 by mgautier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-TARGET := test
-SRC := test.c
+TARGET := test.a
+SRC := test_2.c
 
 # Dependencies
 
-LIBRARY := foo/test.a
+LIBRARY :=
 OBJECTS :=
 ELSE :=
 
 # Sub directories
 
-SUBDIRS := foo/
+SUBDIRS := 

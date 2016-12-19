@@ -6,7 +6,7 @@
 #*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        *#
 #*                                                +#+#+#+#+#+   +#+           *#
 #*   Created: 2016/12/13 19:41:31 by mgautier          #+#    #+#             *#
-#*   Updated: 2016/12/18 00:23:55 by                  ###   ########.fr       *#
+#*   Updated: 2016/12/19 11:52:08 by mgautier         ###   ########.fr       *#
 #*                                                                            *#
 #* ************************************************************************** *#
 
@@ -18,46 +18,51 @@ STACK_POINTER := $(STACK_POINTER).x
 DIR_$(STACK_POINTER) := $(DIR)
 DIR := $(DIR)$(SUBDIR)
 
-# Inclusion of subdirs Rules.mk
-
-SUBDIRS := foo/ bar/
-
-$(info current dir : $(DIR) entering subdirs)
-$(foreach SUBDIR,$(SUBDIRS),$(eval $(INCLUDE_SUBDIRS)))
-
-$(info current dir : $(DIR) leaving subdirs)
 # Local sources files and target
 
--include $(DIR)Srcs.mk
+include $(DIR)Srcs.mk
 
 # Standard expansion of the SRC into the local OBJ and DEP
 # + add them to clean-up variables
 
-$(info before var assign$(DIR) et $(TARGET))
 OBJ_$(DIR) := $(OBJ)
 DEP_$(DIR) := $(DEP)
+PREREQUISITES = $(OBJ_$(DIR)) $(ELSE) $(LIBRARY)
 ifdef TARGET
-TARGET_$(DIR) := $(DIR)$(TARGET)
+	TARGET_$(DIR) := $(DIR)$(TARGET)
 endif
+ifeq ($(suffix $(TARGET)),.a)
+$(TARGET_$(DIR)): RECIPE = $(LINK_STATIC_LIB)
+else
+$(TARGET_$(DIR)): RECIPE = $(LINK_EXE)
+endif
+
+# Clean variables
+
 CLEAN += $(OBJ_$(DIR))
 FCLEAN += $(TARGET_$(DIR)) $(DEP_$(DIR))
+ifneq (DIR,)
+MKCLEAN += $(DIR)Makefile $(DIR)Rules.mk
+endif
 
-$(info fclean : $(FCLEAN))
 -include $(DEP_$(DIR))
 
 #
-#Local rules
+# Local rules
 #
 
-$(TARGET_$(DIR)): $(OBJ_$(DIR))
-	$(LINK_STATIC_LIB)
+$(TARGET_$(DIR)): $(PREREQUISITES)
+	$(RECIPE)
+ifdef DIR
+$(TARGET_$(DIR)): CPPFLAGS := $(CPPFLAGS) -iquote$(DIR)
+endif
+ifdef LIBRARY
+$(TARGET_$(DIR)): CPPFLAGS := $(CPPFLAGS) -iquote$(dir $(LIBRARY))
+endif
+# Inclusion of subdirs Rules.mk
 
-$(OBJ_$(DIR)): CFLAGS_TGT := -iquote$(DIR)$(HEADER_DIR)
+$(foreach SUBDIR,$(SUBDIRS),$(eval $(INCLUDE_SUBDIRS)))
 
-$(TARGET_$(DIR)): LDFLAGS_TGT := -L.$(DIR)$(LIB_DIR) -l$(LIB_NAME)
-
-
-#
 # Tracking current directory
 
 DIR := $(DIR_$(STACK_POINTER))
