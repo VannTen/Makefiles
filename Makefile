@@ -6,12 +6,12 @@
 #*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        *#
 #*                                                +#+#+#+#+#+   +#+           *#
 #*   Created: 2016/11/04 13:12:11 by mgautier          #+#    #+#             *#
-#*   Updated: 2016/12/19 14:22:44 by mgautier         ###   ########.fr       *#
+#*   Updated: 2016/12/19 18:04:19 by mgautier         ###   ########.fr       *#
 #*                                                                            *#
 #* ************************************************************************** *#
 
 .DEFAULT_GOAL:= all
-.SUFFIXES:
+
 # Build tools
 
 SYSTEM = $(shell uname)
@@ -45,9 +45,6 @@ LINK_EXE = $(CC) $(LDFLAGS) $^ -o $@ $(LDFLAGS_TGT)
 OBJ = $(patsubst %.c,$(DIR).%.o,$(SRC))
 DEP = $(patsubst %.c,$(DIR).%.dep,$(SRC))
 
-LIB_DIR = $(dir $(LIBRARY))
-LIB_NAME = $(basename $(patsubst lib%,%,$(LIB)))
-
 # Clean-up variables
 # Collect all the files that need to be deleted along all the project tree
 # the clean-up rules then use them to do their job
@@ -63,12 +60,13 @@ MKCLEAN :=
 .%.o: %.c .%.dep
 	$(COMPILE)
 	$(POSTCOMPILE)
-	touch $@
 	$(RM) $(word 2,$^).tmp
 
 %.dep: ;
 
 .PRECIOUS: %.dep
+
+# Rules to generate the needed Makefiles in the subdirectories
 
 %/Rules.mk: | %/Makefile
 	ln Rules.mk $@
@@ -81,10 +79,15 @@ define INCLUDE_SUBDIRS
 include $(DIR)$(SUBDIR)Rules.mk
 endef
 
+define TARGET_ERROR
+$$(error $$(DIR) : No target if indicated for that directory))
+endef
+
 DIR = 
 include Rules.mk
 
 # Mandatory rules
+# These are the rules which will be specified by the user as arguments to make
 
 all: $(TARGET_$(DIR))
 

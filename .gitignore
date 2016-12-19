@@ -3,3 +3,8 @@
 *.a
 *.o
 *.tmp
+Makefile
+Rules.mk
+!./Makefile
+!./Rules.mk
+test
