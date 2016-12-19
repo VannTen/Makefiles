@@ -6,7 +6,7 @@
 #*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        *#
 #*                                                +#+#+#+#+#+   +#+           *#
 #*   Created: 2016/12/13 19:41:31 by mgautier          #+#    #+#             *#
-#*   Updated: 2016/12/19 11:52:08 by mgautier         ###   ########.fr       *#
+#*   Updated: 2016/12/19 14:21:20 by mgautier         ###   ########.fr       *#
 #*                                                                            *#
 #* ************************************************************************** *#
 
@@ -41,7 +41,7 @@ endif
 
 CLEAN += $(OBJ_$(DIR))
 FCLEAN += $(TARGET_$(DIR)) $(DEP_$(DIR))
-ifneq (DIR,)
+ifneq ($(DIR),)
 MKCLEAN += $(DIR)Makefile $(DIR)Rules.mk
 endif
 
