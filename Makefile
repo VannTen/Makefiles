@@ -6,7 +6,7 @@
 #*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        *#
 #*                                                +#+#+#+#+#+   +#+           *#
 #*   Created: 2016/11/04 13:12:11 by mgautier          #+#    #+#             *#
-#*   Updated: 2016/12/19 18:14:02 by mgautier         ###   ########.fr       *#
+#*   Updated: 2016/12/20 14:59:07 by mgautier         ###   ########.fr       *#
 #*                                                                            *#
 #* ************************************************************************** *#
 
@@ -29,7 +29,7 @@ CPPFLAGS :=
 DEPFLAGS = -MT $@ -MP -MMD -MF $(word 2,$^).tmp
 
 COMPILE = $(CC) $(DEPFLAGS) $(CFLAGS) $(CPPFLAGS) -c -o $@ $<
-POSTCOMPILE = sed -E "s/[a-z_.:]+/\$$(DIR)&/g" $(word 2,$^).tmp > $(word 2,$^)
+POSTCOMPILE = sed -E 's|([0-9a-z_.:]*/)?([0-9a-z_.:]+)|$$(DIR)\2|g' $(word 2,$^).tmp > $(word 2,$^)
 
 # DIRECTORY TARGETS RECIPES
 

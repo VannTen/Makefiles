@@ -6,7 +6,7 @@
 #*   By: mgautier <mgautier@student.42.fr>          +#+  +:+       +#+        *#
 #*                                                +#+#+#+#+#+   +#+           *#
 #*   Created: 2016/12/13 19:41:31 by mgautier          #+#    #+#             *#
-#*   Updated: 2016/12/19 18:03:49 by mgautier         ###   ########.fr       *#
+#*   Updated: 2016/12/20 14:38:35 by mgautier         ###   ########.fr       *#
 #*                                                                            *#
 #* ************************************************************************** *#
 
@@ -57,6 +57,7 @@ endif
 
 # Local rules
 
+$(info desdes $(TARGET_$(DIR)) $(PREREQUISITES))
 $(TARGET_$(DIR)): $(PREREQUISITES)
 	$(RECIPE)
 
